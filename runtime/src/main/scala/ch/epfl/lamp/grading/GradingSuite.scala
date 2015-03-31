@@ -22,14 +22,14 @@ trait GradingSuite extends FunSuiteLike {
   // Timeout per test, defined in Settings.scala. There's also a global timeout
   // when running Scalatest in a separate JVM, see ScalaTestRunner
   val individualTestTimeout: Int =
-    util.Properties.propOrEmpty("scalatest.individualTestTimeout").toInt
+    util.Properties.propOrElse("scalatest.individualTestTimeout", "240").toInt
 
   // List of files that are readable under the security manager
   val readableFiles: List[String] =
     util.Properties.propOrEmpty("scalatest.readableFiles").split(":").filterNot(_.isEmpty).toList
 
   val defaultWeight: Int =
-    util.Properties.propOrEmpty("scalatest.defaultWeight").toInt
+    util.Properties.propOrElse("scalatest.defaultWeight", "10").toInt
 
   /**
    * Run `task` and abort if it takes too long. Seems the only way to do it
