@@ -40,6 +40,19 @@ class InstrumentationTest extends FunSuite with InstrumentedSuite {
     }
   }
 
+  test("instrumentation is enabled on module classes") {
+    val className = InstrumentationEnabled.getClass.getName.replace('.', '/')
+    var enabled = false
+    profile(M(className, "instrumentedMethod", "()V")) {
+      InstrumentationEnabled.instrumentedMethod()
+    } {
+      enabled = true
+      checkCalled(M(className, "instrumentedMethod", "()V"))
+    }
+    assert(enabled,
+        "instrumentation was disabled on object InstrumentationEnabled")
+  }
+
   test("binary signatures") {
     val obj = new InstrumentationEnabled
     var enabled = false
