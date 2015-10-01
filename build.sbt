@@ -81,7 +81,10 @@ lazy val `scala-grading-plugin-test` = project.in(file("plugin-test")).
     description := "Tests for the scala-grading compiler plugin.",
     autoCompilerPlugins := true,
     scalacOptions +=
-      "-P:scalagrading:instrumentClassPrefix:ch.epfl.lamp.grading.tests.instrenabled"
+      "-P:scalagrading:instrumentClassPrefix:ch.epfl.lamp.grading.tests.instrenabled",
+    publishTo := None,
+    publish := {},
+    publishLocal := {}
   ).
   dependsOn(`scala-grading-runtime`, `scala-grading-plugin` % "plugin")
 
