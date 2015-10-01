@@ -18,3 +18,9 @@ class InstrumentationEnabled {
     42
   }
 }
+
+object InstrumentationEnabled {
+  def instrumentedMethod(): Unit = {
+    assert(true)
+  }
+}

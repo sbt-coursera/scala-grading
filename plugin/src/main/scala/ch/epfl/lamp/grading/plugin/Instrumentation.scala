@@ -46,7 +46,7 @@ abstract class Instrumentation
           super.transform(tree)
         } else {
           // do instrument
-          val className = sym.owner.fullName('/')
+          val className = classBinaryName(sym.owner)
           val methodName = sym.name.toString
           val methodDescriptor = computeMethodDescriptor(sym.tpe)
           val newRhs = typer.typed {
@@ -103,10 +103,11 @@ abstract class Instrumentation
       case LongClass    => "J"
       case FloatClass   => "F"
       case DoubleClass  => "D"
-
-      case _ =>
-        "L" + sym.fullName('/') + (if (sym.isModuleClass) "$" else "") + ";"
+      case _            => "L" + classBinaryName(sym) + ";"
     }
+
+    private def classBinaryName(sym: Symbol): String =
+      sym.fullName('/') + (if (sym.isModuleClass) "$" else "")
   }
 }
 
